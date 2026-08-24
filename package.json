@@ -1,0 +1,32 @@
+{
+  "name": "gastos-app",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "App mobile-first para registrar gastos do dia a dia, com sync futuro para Google Sheets. Fase 1: captura rapida offline.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview --host"
+  },
+  "dependencies": {
+    "framer-motion": "^11.3.28",
+    "lucide-react": "^0.446.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@fontsource-variable/bricolage-grotesque": "^5.0.13",
+    "@fontsource-variable/hanken-grotesk": "^5.0.20",
+    "@fontsource/fragment-mono": "^5.0.20",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.6"
+  }
+}
