@@ -11,9 +11,13 @@
 ## Status atual
 
 - [x] **Fase 1 — App funcional (local)** — FEITO e testado no navegador.
-  - Captura rápida: valor, descrição, data, categoria, forma de pagamento.
-  - Funciona **offline** (persistência em `localStorage`), lista "Hoje", total do mês.
-  - Estética "Caderno riso" (ver README). Só ícones, nunca emoji.
+  - Duas telas com navegação inferior:
+    - **Registrar** (singela): saudação tenra + captura rápida (valor, descrição,
+      data, categoria, forma de pagamento) + lista "Hoje". Sem total do mês na cara.
+    - **Histórico**: meses do mais recente ao mais antigo; cada mês abre com a
+      quebra por categoria (barrinhas + contagem). É aqui que os totais moram.
+  - Funciona **offline** (persistência em `localStorage`).
+  - Estética "Caderno riso" (ver README), acento rosa-terroso tenro. Só ícones, nunca emoji.
   - Costura de persistência (`src/lib/store.ts`) pronta para trocar por Firestore
     sem tocar em nenhum componente.
 - [ ] **Fase 0 — Setup de nuvem** — DEPENDE DE VOCÊ (ver abaixo).

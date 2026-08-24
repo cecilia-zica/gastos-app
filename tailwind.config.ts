@@ -30,7 +30,7 @@ export default {
       },
       boxShadow: {
         card: "0 1px 2px rgba(20,52,43,.05), 0 10px 30px rgba(20,52,43,.07)",
-        pop: "0 8px 24px rgba(255,78,106,.32)",
+        pop: "0 6px 18px rgba(207,95,118,.26)",
       },
     },
   },

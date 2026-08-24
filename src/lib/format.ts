@@ -39,9 +39,26 @@ export function formatDayLabel(iso: string): string {
   return `${DIAS[dt.getDay()]}, ${d} ${MESES[m - 1].slice(0, 3)}`;
 }
 
-/** Nome do mes por extenso capitalizado: "Agosto". */
+function cap(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+/** Nome do mes por extenso capitalizado a partir de data ISO: "Agosto". */
 export function monthName(iso: string): string {
-  const m = Number(iso.slice(5, 7));
-  const n = MESES[m - 1];
-  return n.charAt(0).toUpperCase() + n.slice(1);
+  return cap(MESES[Number(iso.slice(5, 7)) - 1]);
+}
+
+/** A partir de uma chave "YYYY-MM": "Agosto 2026". */
+export function monthYearLabel(key: string): string {
+  const [y, m] = key.split("-").map(Number);
+  return `${cap(MESES[m - 1])} ${y}`;
+}
+
+/** Saudacao conforme a hora do dia. */
+export function greeting(): string {
+  const h = new Date().getHours();
+  if (h < 6) return "Boa madrugada";
+  if (h < 12) return "Bom dia";
+  if (h < 18) return "Boa tarde";
+  return "Boa noite";
 }
