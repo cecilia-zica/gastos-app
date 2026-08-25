@@ -1,4 +1,4 @@
-import { CATEGORIES } from "../lib/config";
+import { CATEGORIES } from "../shared/catalog";
 
 interface Props {
   value: string;
@@ -25,7 +25,7 @@ export default function CategoryChips({ value, onChange }: Props) {
               "flex flex-none items-center gap-1.5 whitespace-nowrap rounded-full",
               "border px-3.5 py-2 text-sm font-medium transition-all duration-150",
               active
-                ? "border-accent bg-accent text-white shadow-pop"
+                ? "border-accent bg-accent text-ink shadow-pop"
                 : "border-line bg-surface text-ink hover:border-ink/30",
             ].join(" ")}
           >

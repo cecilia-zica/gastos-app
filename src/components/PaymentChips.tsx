@@ -1,5 +1,5 @@
-import { PAYMENTS } from "../lib/config";
-import type { Payment } from "../types";
+import { PAYMENTS } from "../shared/catalog";
+import type { Payment } from "../model/types";
 
 interface Props {
   value: Payment;

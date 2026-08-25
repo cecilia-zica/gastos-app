@@ -5,6 +5,9 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# seed de dados reais puxados da planilha (dados pessoais — não versionar)
+public/seed-gastos.json
 .DS_Store
 .vscode/*
 !.vscode/extensions.json

@@ -20,7 +20,7 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
-import type { Payment } from "../types";
+import type { Payment } from "../model/types";
 
 export interface CategoryDef {
   id: string;

@@ -1,7 +1,8 @@
-import QuickAdd, { type Draft } from "../components/QuickAdd";
+import QuickAdd from "../components/QuickAdd";
 import EntryList from "../components/EntryList";
-import { greeting } from "../lib/format";
-import type { Expense } from "../types";
+import { greeting } from "../shared/format";
+import type { Expense } from "../model/types";
+import type { Draft } from "../controllers/useDraft";
 
 interface Props {
   draft: Draft;

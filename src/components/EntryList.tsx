@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Trash2, Receipt } from "lucide-react";
-import { CATEGORY_ICON } from "../lib/config";
-import { formatBRL } from "../lib/format";
-import type { Expense } from "../types";
+import { CATEGORY_ICON } from "../shared/catalog";
+import { formatBRL } from "../shared/format";
+import type { Expense } from "../model/types";
 
 interface Props {
   title: string;

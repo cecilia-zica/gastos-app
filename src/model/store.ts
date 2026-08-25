@@ -1,4 +1,4 @@
-import type { Expense, NewExpense } from "../types";
+import type { Expense, NewExpense } from "./types";
 
 /**
  * Contrato de persistencia do app.
@@ -14,6 +14,10 @@ export interface ExpenseStore {
   add(input: NewExpense): Promise<Expense>;
   update(id: string, patch: Partial<NewExpense>): Promise<void>;
   remove(id: string): Promise<void>;
+  /** Importa vários de uma vez (ex: seed da planilha). Não notifica por item. */
+  importMany(inputs: NewExpense[]): Promise<void>;
+  /** Quantidade atual — usado para semear só quando vazio. */
+  size(): number;
 }
 
 const KEY = "miudos-expenses-v1";
@@ -83,6 +87,21 @@ export class LocalStorageStore implements ExpenseStore {
 
   async remove(id: string): Promise<void> {
     this.write(this.read().filter((e) => e.id !== id));
+  }
+
+  size(): number {
+    return this.read().length;
+  }
+
+  async importMany(inputs: NewExpense[]): Promise<void> {
+    const now = Date.now();
+    const novos: Expense[] = inputs.map((input, i) => ({
+      ...input,
+      id: makeId(),
+      createdAt: now + i,
+      syncedToSheet: false,
+    }));
+    this.write([...novos, ...this.read()]);
   }
 }
 

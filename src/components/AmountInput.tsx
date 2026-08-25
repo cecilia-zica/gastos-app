@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { formatCents } from "../lib/format";
+import { formatCents } from "../shared/format";
 
 interface Props {
   cents: number;

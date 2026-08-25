@@ -1,15 +1,7 @@
 import AmountInput from "./AmountInput";
 import CategoryChips from "./CategoryChips";
 import PaymentChips from "./PaymentChips";
-import type { Payment } from "../types";
-
-export interface Draft {
-  cents: number;
-  description: string;
-  date: string;
-  category: string;
-  payment: Payment;
-}
+import type { Draft } from "../controllers/useDraft";
 
 interface Props {
   draft: Draft;

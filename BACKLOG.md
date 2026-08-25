@@ -11,15 +11,25 @@
 ## Status atual
 
 - [x] **Fase 1 — App funcional (local)** — FEITO e testado no navegador.
-  - Duas telas com navegação inferior:
-    - **Registrar** (singela): saudação tenra + captura rápida (valor, descrição,
-      data, categoria, forma de pagamento) + lista "Hoje". Sem total do mês na cara.
-    - **Histórico**: meses do mais recente ao mais antigo; cada mês abre com a
-      quebra por categoria (barrinhas + contagem). É aqui que os totais moram.
+  - **Arquitetura MVC**: `model/` (types, store, analytics, seed) · `controllers/`
+    (hooks useExpenses/useDraft/useDashboard) · `views/` + `components/` · `shared/`.
+  - **Três telas** com navegação inferior:
+    - **Registrar** (singela): saudação tenra + captura rápida + lista "Hoje".
+    - **Histórico**: seletor de mês; mês escolhido mostra total, quebra por
+      categoria (barras) e a lista de lançamentos.
+    - **Resumo** (dashboard): espelha os painéis da planilha (só saídas) — total,
+      média/dia, forma mais usada, ranking por categoria, por forma de pagamento,
+      saídas por mês e maior gasto. Filtro Mês/Ano/Tudo.
   - Funciona **offline** (persistência em `localStorage`).
-  - Estética "Caderno riso" (ver README), acento rosa-terroso tenro. Só ícones, nunca emoji.
-  - Costura de persistência (`src/lib/store.ts`) pronta para trocar por Firestore
-    sem tocar em nenhum componente.
+  - Paleta "Protea" (creme/laranja/taupe/palha); dado dos gráficos em marrom-sienna
+    (validado pelo script dataviz: contraste + chroma). Só ícones, nunca emoji.
+  - **Testes** (Vitest): 19 testes das agregações de `model/analytics`.
+  - Nome do app: **wert** (provisório).
+- [x] **Dados reais (pull pontual)** — FEITO como seed de desenvolvimento.
+  - `public/seed-gastos.json` (gitignored, dados pessoais): 53 gastos de jul/ago
+    lidos da planilha. O app carrega no primeiro uso se estiver vazio
+    (`model/seed.ts`). É leitura **best-effort** de uma planilha bagunçada — pode ter
+    imprecisão. O sync de verdade (duas vias) continua sendo a Fase 2.
 - [ ] **Fase 0 — Setup de nuvem** — DEPENDE DE VOCÊ (ver abaixo).
 - [ ] **Fase 2 — Sync com a planilha** — depende da Fase 0.
 - [ ] **Fase 3 — Polir / PWA instalável / ajustar estética juntas.**

@@ -1,11 +1,12 @@
-import { NotebookPen, CalendarDays } from "lucide-react";
+import { NotebookPen, CalendarDays, PieChart } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-export type View = "registrar" | "historico";
+export type View = "registrar" | "historico" | "resumo";
 
 const TABS: { id: View; label: string; icon: LucideIcon }[] = [
   { id: "registrar", label: "Registrar", icon: NotebookPen },
   { id: "historico", label: "Histórico", icon: CalendarDays },
+  { id: "resumo", label: "Resumo", icon: PieChart },
 ];
 
 interface Props {

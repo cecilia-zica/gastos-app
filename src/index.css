@@ -11,23 +11,31 @@
   ============================================================
 */
 :root {
-  /* neutros escolhidos com vies quente/verde — nao um cinza qualquer */
-  --paper: #efe9dd;        /* papel morno (nao o cream generico) */
-  --paper-2: #e7e0d1;      /* papel um tom abaixo, p/ profundidade */
-  --surface: #faf7ef;      /* cartoes, quase branco morno */
-  --ink: #14342b;          /* verde-garrafa profundo = texto */
-  --ink-soft: #2c4a40;
-  --muted: #6d7b6f;        /* verde-acinzentado p/ legendas */
-  --line: #d9d1bf;         /* hairline sobre papel */
+  /* Paleta "Protea" — flor pincushion: taupe, laranja, creme, amarelo-palha.
+     Neutros quentes escolhidos (nao um cinza qualquer); o dado veste laranja. */
+  --paper: #ece1cf;        /* papel creme morno (fundo) */
+  --paper-2: #e3d5bd;      /* um tom abaixo, p/ profundidade */
+  --surface: #f7f0e3;      /* cartoes, palha clara */
+  --ink: #3a2e20;          /* espresso profundo = texto (derivado do taupe) */
+  --ink-soft: #5f4c37;
+  --muted: #877254;        /* taupe escuro p/ legendas (contraste AA) */
+  --line: #ddceb4;         /* hairline sobre papel */
 
-  /* o acento: rosa-terroso, tenro. Um lugar so, com carinho — nao gritando. */
-  --accent: #cf5f76;
-  --accent-ink: #a23a52;
-  --accent-soft: #f6e2e6;
+  /* o acento: laranja-protea. Um lugar so, quente e vivo. Texto sobre ele = ink. */
+  --accent: #e4842b;
+  --accent-ink: #a85d15;
+  --accent-soft: #f7e3c8;
 
-  --good: #1f7a54;
+  /* amarelo-palha p/ realces sutis (2o plano de dado, nunca compete com o laranja) */
+  --straw: #e4e69c;
 
-  --grain-opacity: 0.5;
+  /* cor de dado dos graficos: marrom-sienna (validado: contraste + chroma AA) */
+  --data: #8a4e16;
+  --data-soft: #e7d3b8;
+
+  --good: #6f7a2f;         /* oliva quente p/ estado positivo */
+
+  --grain-opacity: 0.42;
 }
 
 * { box-sizing: border-box; }
@@ -43,8 +51,8 @@ body {
   text-rendering: optimizeLegibility;
   /* atmosfera: dois glows riso deslocados + gradiente de papel */
   background-image:
-    radial-gradient(120% 90% at 85% -10%, rgba(255, 63, 108, 0.10), transparent 55%),
-    radial-gradient(120% 80% at -10% 8%, rgba(31, 122, 84, 0.10), transparent 50%),
+    radial-gradient(120% 90% at 85% -10%, rgba(228, 132, 43, 0.16), transparent 55%),
+    radial-gradient(120% 80% at -10% 8%, rgba(228, 230, 156, 0.30), transparent 50%),
     linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
   background-attachment: fixed;
 }

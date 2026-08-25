@@ -18,6 +18,9 @@ export default {
         accent: "var(--accent)",
         "accent-ink": "var(--accent-ink)",
         "accent-soft": "var(--accent-soft)",
+        straw: "var(--straw)",
+        data: "var(--data)",
+        "data-soft": "var(--data-soft)",
         good: "var(--good)",
       },
       fontFamily: {
@@ -30,7 +33,7 @@ export default {
       },
       boxShadow: {
         card: "0 1px 2px rgba(20,52,43,.05), 0 10px 30px rgba(20,52,43,.07)",
-        pop: "0 6px 18px rgba(207,95,118,.26)",
+        pop: "0 6px 18px rgba(228,132,43,.30)",
       },
     },
   },
