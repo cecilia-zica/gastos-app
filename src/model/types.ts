@@ -1,5 +1,5 @@
-/** Formas de pagamento do v1. Cartoes nomeados entram em versao futura. */
-export type Payment = "Dinheiro" | "Pix" | "Débito" | "Crédito";
+/** Formas de pagamento. "Caju" = cartao de beneficio, muito usado pela usuaria. */
+export type Payment = "Dinheiro" | "Pix" | "Débito" | "Crédito" | "Caju";
 
 /** Um gasto. amountCents em centavos (inteiro) para evitar erro de float. */
 export interface Expense {

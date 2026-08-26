@@ -25,11 +25,17 @@
     (validado pelo script dataviz: contraste + chroma). Só ícones, nunca emoji.
   - **Testes** (Vitest): 19 testes das agregações de `model/analytics`.
   - Nome do app: **wert** (provisório).
-- [x] **Dados reais (pull pontual)** — FEITO como seed de desenvolvimento.
-  - `public/seed-gastos.json` (gitignored, dados pessoais): 53 gastos de jul/ago
-    lidos da planilha. O app carrega no primeiro uso se estiver vazio
-    (`model/seed.ts`). É leitura **best-effort** de uma planilha bagunçada — pode ter
-    imprecisão. O sync de verdade (duas vias) continua sendo a Fase 2.
+- [x] **Dados reais (pull pontual)** — FEITO e corrigido via export .xlsx.
+  - A leitura antiga (markdown do Drive) saía errada porque fundia tabelas lado a
+    lado. Agora leio o **.xlsx exportado** (openpyxl) célula a célula: em cada aba de
+    mês, a tabela "Gastos do dia a dia (variáveis)" está em K=Categoria L=Descrição
+    M=Data N=Parcela O=Pagamento P=Valor. A data real é a coluna M (não o nome da aba).
+  - `public/seed-gastos.json` (gitignored): **68 gastos variáveis** reais (jul/ago +
+    alguns jun/out), total R$ 2.126,39. O app semeia se vazio (`model/seed.ts`).
+  - Nova forma de pagamento **"Caju"** (cartão de benefício, a mais usada dela).
+  - Fixos (aluguel/assinaturas) NÃO importados (foco no dia a dia); dá pra incluir depois.
+  - Fonte do export: `~/Downloads/Planilha Financeira Ceci - 2026 .xlsx`.
+  - Sync de verdade (duas vias) continua sendo a Fase 2.
 - [ ] **Fase 0 — Setup de nuvem** — DEPENDE DE VOCÊ (ver abaixo).
 - [ ] **Fase 2 — Sync com a planilha** — depende da Fase 0.
 - [ ] **Fase 3 — Polir / PWA instalável / ajustar estética juntas.**

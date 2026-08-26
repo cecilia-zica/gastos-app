@@ -3,7 +3,7 @@ import { CalendarDays } from "lucide-react";
 import BarList, { type BarItem } from "../components/charts/BarList";
 import EntryList from "../components/EntryList";
 import { CATEGORY_ICON } from "../shared/catalog";
-import { monthKey, monthYearLabel, formatBRL } from "../shared/format";
+import { monthKey, monthYearLabel, formatBRL, todayISO } from "../shared/format";
 import { topCategories, sumCents } from "../model/analytics";
 import type { Expense } from "../model/types";
 
@@ -20,7 +20,10 @@ export default function HistoricoView({ expenses, onDelete }: Props) {
   }, [expenses]);
 
   const [sel, setSel] = useState<string | null>(null);
-  const active = sel && months.includes(sel) ? sel : months[0];
+  // abre no mês atual se houver dados; senão, no mês mais recente
+  const current = monthKey(todayISO());
+  const fallback = months.includes(current) ? current : months[0];
+  const active = sel && months.includes(sel) ? sel : fallback;
 
   const monthEntries = useMemo(
     () => (active ? expenses.filter((e) => monthKey(e.date) === active) : []),

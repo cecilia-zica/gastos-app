@@ -18,6 +18,7 @@ import {
   Landmark,
   CreditCard,
   Zap,
+  Wallet,
   type LucideIcon,
 } from "lucide-react";
 import type { Payment } from "../model/types";
@@ -61,6 +62,7 @@ export const PAYMENTS: PaymentDef[] = [
   { id: "Pix", icon: Zap },
   { id: "Débito", icon: Landmark },
   { id: "Crédito", icon: CreditCard },
+  { id: "Caju", icon: Wallet },
 ];
 
 /** Padroes ao abrir o app. */
