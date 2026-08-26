@@ -4,9 +4,11 @@ import { Check, NotebookPen } from "lucide-react";
 import RegistrarView from "./views/RegistrarView";
 import HistoricoView from "./views/HistoricoView";
 import DashboardView from "./views/DashboardView";
+import FixosView from "./views/FixosView";
 import TabBar, { type View } from "./components/TabBar";
 import { useExpenses } from "./controllers/useExpenses";
 import { useDraft } from "./controllers/useDraft";
+import { useRecurring } from "./controllers/useRecurring";
 import { todayISO } from "./shared/format";
 
 /**
@@ -15,6 +17,7 @@ import { todayISO } from "./shared/format";
  */
 export default function App() {
   const { expenses, add, remove } = useExpenses();
+  const recurring = useRecurring(expenses);
   const { draft, set, canSave, save } = useDraft(add);
   const [toast, setToast] = useState<string | null>(null);
   const [view, setView] = useState<View>("registrar");
@@ -64,8 +67,15 @@ export default function App() {
           />
         ) : view === "historico" ? (
           <HistoricoView expenses={expenses} onDelete={(id) => remove(id)} />
-        ) : (
+        ) : view === "resumo" ? (
           <DashboardView expenses={expenses} />
+        ) : (
+          <FixosView
+            recurrings={recurring.recurrings}
+            onAdd={recurring.add}
+            onEdit={recurring.edit}
+            onRemove={recurring.remove}
+          />
         )}
       </main>
 

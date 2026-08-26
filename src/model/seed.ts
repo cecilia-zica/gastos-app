@@ -1,5 +1,6 @@
 import type { ExpenseStore } from "./store";
-import type { NewExpense } from "./types";
+import type { RecurringStore } from "./recurringStore";
+import type { NewExpense, NewRecurring } from "./types";
 
 /**
  * Semente de desenvolvimento: se o app estiver vazio, puxa uma foto dos
@@ -24,5 +25,22 @@ export async function loadSeedIfEmpty(store: ExpenseStore): Promise<void> {
     }
   } catch {
     // sem seed disponível — segue vazio, sem drama.
+  }
+}
+
+let startedFixos = false;
+
+/** Semente dos gastos fixos recorrentes (mesma ideia; /seed-fixos.json). */
+export async function loadFixosSeedIfEmpty(store: RecurringStore): Promise<void> {
+  if (startedFixos) return;
+  startedFixos = true;
+  if (store.size() > 0) return;
+  try {
+    const res = await fetch("/seed-fixos.json", { cache: "no-store" });
+    if (!res.ok) return;
+    const data = (await res.json()) as NewRecurring[];
+    if (Array.isArray(data) && data.length > 0) await store.importMany(data);
+  } catch {
+    // sem seed — segue vazio.
   }
 }

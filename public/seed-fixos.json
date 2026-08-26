@@ -1,0 +1,8 @@
+[
+{"description":"Psi","amountCents":36000,"category":"Saúde","payment":"Pix","dayOfMonth":1,"since":"2026-07","until":null},
+{"description":"OpenEnglish","amountCents":19375,"category":"Assinaturas","payment":"Crédito","dayOfMonth":1,"since":"2026-07","until":null},
+{"description":"WellHub","amountCents":18330,"category":"Saúde","payment":"Crédito","dayOfMonth":1,"since":"2026-07","until":null},
+{"description":"Unha Gel","amountCents":12000,"category":"Mimos","payment":"Débito","dayOfMonth":15,"since":"2026-07","until":null},
+{"description":"Claude","amountCents":11000,"category":"Assinaturas","payment":"Crédito","dayOfMonth":1,"since":"2026-07","until":null},
+{"description":"EspaçoLaser","amountCents":8327,"category":"Mimos","payment":"Crédito","dayOfMonth":1,"since":"2026-07","until":null}
+]

@@ -16,6 +16,8 @@ export interface ExpenseStore {
   remove(id: string): Promise<void>;
   /** Importa vários de uma vez (ex: seed da planilha). Não notifica por item. */
   importMany(inputs: NewExpense[]): Promise<void>;
+  /** Insere expenses com id próprio; ignora os que já existem (idempotente). */
+  upsertMany(items: Expense[]): Promise<void>;
   /** Quantidade atual — usado para semear só quando vazio. */
   size(): number;
 }
@@ -102,6 +104,14 @@ export class LocalStorageStore implements ExpenseStore {
       syncedToSheet: false,
     }));
     this.write([...novos, ...this.read()]);
+  }
+
+  async upsertMany(items: Expense[]): Promise<void> {
+    const cur = this.read();
+    const have = new Set(cur.map((e) => e.id));
+    const novos = items.filter((e) => !have.has(e.id));
+    if (novos.length === 0) return;
+    this.write([...novos, ...cur]);
   }
 }
 
