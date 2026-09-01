@@ -32,7 +32,7 @@ function makeId(): string {
 }
 
 /** Ordena mais recente primeiro (por data do gasto, desempata por criacao). */
-function sortExpenses(list: Expense[]): Expense[] {
+export function sortExpenses(list: Expense[]): Expense[] {
   return [...list].sort((a, b) =>
     a.date === b.date ? b.createdAt - a.createdAt : a.date < b.date ? 1 : -1,
   );
@@ -115,5 +115,66 @@ export class LocalStorageStore implements ExpenseStore {
   }
 }
 
-/** Instancia unica usada pelo app hoje. */
-export const store: ExpenseStore = new LocalStorageStore();
+/**
+ * Roteador de backend: mantem a MESMA identidade/objeto que os controllers
+ * assinam (useExpenses), so troca o backend por baixo (local <-> Firestore)
+ * via setBackend(). Assim App.tsx troca de fonte de dados no login/logout
+ * sem que nenhum controller ou view precise saber disso.
+ */
+class RoutingStore implements ExpenseStore {
+  private backend: ExpenseStore;
+  private listeners = new Set<(e: Expense[]) => void>();
+  private unsubBackend: (() => void) | null = null;
+  private lastSnapshot: Expense[] = [];
+
+  constructor(initial: ExpenseStore) {
+    this.backend = initial;
+    this.setBackend(initial);
+  }
+
+  setBackend(next: ExpenseStore) {
+    this.unsubBackend?.();
+    this.backend = next;
+    this.unsubBackend = next.subscribe((list) => {
+      this.lastSnapshot = list;
+      this.listeners.forEach((cb) => cb(list));
+    });
+  }
+
+  subscribe(cb: (expenses: Expense[]) => void): () => void {
+    this.listeners.add(cb);
+    cb(this.lastSnapshot);
+    return () => this.listeners.delete(cb);
+  }
+
+  add(input: NewExpense): Promise<Expense> {
+    return this.backend.add(input);
+  }
+
+  update(id: string, patch: Partial<NewExpense>): Promise<void> {
+    return this.backend.update(id, patch);
+  }
+
+  remove(id: string): Promise<void> {
+    return this.backend.remove(id);
+  }
+
+  importMany(inputs: NewExpense[]): Promise<void> {
+    return this.backend.importMany(inputs);
+  }
+
+  upsertMany(items: Expense[]): Promise<void> {
+    return this.backend.upsertMany(items);
+  }
+
+  size(): number {
+    return this.backend.size();
+  }
+}
+
+/** Backend local puro — usado como default e pra ler dados na migracao pra nuvem. */
+export const localOnlyStore: ExpenseStore = new LocalStorageStore();
+
+/** Instancia unica usada pelo app hoje; setBackend() troca local <-> nuvem. */
+export const store: ExpenseStore & { setBackend(next: ExpenseStore): void } =
+  new RoutingStore(localOnlyStore);

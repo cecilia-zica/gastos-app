@@ -1,21 +1,51 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, NotebookPen } from "lucide-react";
+import { Check, LogOut, NotebookPen } from "lucide-react";
 import RegistrarView from "./views/RegistrarView";
 import HistoricoView from "./views/HistoricoView";
 import DashboardView from "./views/DashboardView";
 import FixosView from "./views/FixosView";
+import EntrarView from "./views/EntrarView";
 import TabBar, { type View } from "./components/TabBar";
 import { useExpenses } from "./controllers/useExpenses";
 import { useDraft } from "./controllers/useDraft";
 import { useRecurring } from "./controllers/useRecurring";
+import { useAuth } from "./controllers/useAuth";
 import { todayISO } from "./shared/format";
+import { firebaseEnabled } from "./model/firebase";
+import { store } from "./model/store";
+import { recurringStore } from "./model/recurringStore";
+import { FirebaseExpenseStore } from "./model/firebaseExpenseStore";
+import { FirebaseRecurringStore } from "./model/firebaseRecurringStore";
+import { migrateLocalToCloud } from "./model/migrate";
 
 /**
  * Raiz (MVC): liga os controllers (useExpenses, useDraft) às views.
- * Não contém regra de domínio — só orquestra estado de tela e toasts.
+ * Não contém regra de domínio — só orquestra estado de tela, auth e toasts.
  */
 export default function App() {
+  const auth = useAuth();
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [cloudReady, setCloudReady] = useState(!firebaseEnabled);
+
+  // Login com Google feito: troca o backend do store pra Firestore (namespaced
+  // por uid) e sobe uma unica vez o que ja existia local. Logout: volta pro local.
+  useEffect(() => {
+    if (!firebaseEnabled) return;
+    if (!auth.user) {
+      setCloudReady(false);
+      return;
+    }
+    const cloudExpenses = new FirebaseExpenseStore(auth.user.uid);
+    const cloudRecurring = new FirebaseRecurringStore(auth.user.uid);
+    store.setBackend(cloudExpenses);
+    recurringStore.setBackend(cloudRecurring);
+    setCloudReady(false);
+    void migrateLocalToCloud(cloudExpenses, cloudRecurring, auth.user.uid).then(() =>
+      setCloudReady(true),
+    );
+  }, [auth.user]);
+
   const { expenses, add, remove } = useExpenses();
   const recurring = useRecurring(expenses);
   const { draft, set, canSave, save } = useDraft(add);
@@ -42,6 +72,27 @@ export default function App() {
     if (await save()) showToast("Anotado");
   }
 
+  async function handleSignIn() {
+    setAuthError(null);
+    try {
+      await auth.signIn();
+    } catch {
+      setAuthError("Não deu pra entrar. Tenta de novo.");
+    }
+  }
+
+  if (firebaseEnabled && (auth.loading || (auth.user && !cloudReady))) {
+    return (
+      <div className="grid min-h-screen place-items-center text-[14px] text-muted">
+        carregando...
+      </div>
+    );
+  }
+
+  if (firebaseEnabled && !auth.user) {
+    return <EntrarView onSignIn={handleSignIn} error={authError} />;
+  }
+
   return (
     <div className="mx-auto min-h-screen max-w-[460px] px-4 pb-44 pt-6">
       <header className="rise mb-5 flex items-center gap-2.5 px-1">
@@ -52,6 +103,16 @@ export default function App() {
           <h1 className="font-display text-lg font-bold tracking-tight">wert</h1>
           <p className="text-xs font-medium text-muted">seus gastos, sem susto</p>
         </div>
+        {auth.user && (
+          <button
+            type="button"
+            onClick={() => void auth.signOut()}
+            aria-label="Sair"
+            className="ml-auto grid h-8 w-8 place-items-center rounded-lg text-muted transition-colors hover:text-ink-soft"
+          >
+            <LogOut size={17} strokeWidth={2.2} />
+          </button>
+        )}
       </header>
 
       {/* troca de view por remontagem + fade CSS (key={view}); simples e à
