@@ -120,16 +120,19 @@ export default function DashboardView({ expenses, income, investments, budgets, 
         />
         <div className="grid grid-cols-3 gap-2.5">
           <StatTile
+            compact
             label="Entradas"
             value={formatBRL(incomeCents)}
             icon={<TrendingUp size={12} strokeWidth={2.2} />}
           />
           <StatTile
+            compact
             label="Saídas"
             value={formatBRL(data.totalCents)}
             icon={<TrendingDown size={12} strokeWidth={2.2} />}
           />
           <StatTile
+            compact
             label="Investido"
             value={formatBRL(investedCents)}
             hint={investedGoalCents > 0 ? `meta ${formatBRL(investedGoalCents)}` : undefined}
