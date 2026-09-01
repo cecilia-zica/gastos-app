@@ -6,6 +6,7 @@ import {
   topCategories,
   byPayment,
   monthlyTotals,
+  topExpenses,
   maxExpense,
   minExpense,
   mostUsedPayment,
@@ -110,6 +111,16 @@ describe("max/min expense", () => {
   it("vazio = undefined", () => {
     expect(maxExpense([])).toBeUndefined();
     expect(minExpense([])).toBeUndefined();
+  });
+});
+
+describe("topExpenses", () => {
+  it("ordena por valor decrescente e respeita o limite", () => {
+    const top = topExpenses(sample, 3);
+    expect(top.map((e) => e.amountCents)).toEqual([2000, 1000, 700]);
+  });
+  it("limite maior que a lista retorna tudo", () => {
+    expect(topExpenses(sample, 99)).toHaveLength(sample.length);
   });
 });
 

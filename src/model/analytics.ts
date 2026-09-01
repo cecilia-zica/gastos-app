@@ -26,15 +26,15 @@ const MES_ABBR = [
   "jul", "ago", "set", "out", "nov", "dez",
 ];
 
-export function filterByPeriod(
-  expenses: Expense[],
+export function filterByPeriod<T extends { date: string }>(
+  items: T[],
   period: Period,
   refISO: string,
-): Expense[] {
-  if (period === "all") return expenses;
+): T[] {
+  if (period === "all") return items;
   const key = period === "month" ? refISO.slice(0, 7) : refISO.slice(0, 4);
   const len = period === "month" ? 7 : 4;
-  return expenses.filter((e) => e.date.slice(0, len) === key);
+  return items.filter((e) => e.date.slice(0, len) === key);
 }
 
 export function sumCents(expenses: Expense[]): number {
@@ -86,6 +86,10 @@ export function monthlyTotals(expenses: Expense[]): MonthAgg[] {
     }));
 }
 
+export function topExpenses(expenses: Expense[], limit: number): Expense[] {
+  return [...expenses].sort((a, b) => b.amountCents - a.amountCents).slice(0, limit);
+}
+
 export function maxExpense(expenses: Expense[]): Expense | undefined {
   return expenses.reduce<Expense | undefined>(
     (best, e) => (!best || e.amountCents > best.amountCents ? e : best),
@@ -119,6 +123,7 @@ export interface Dashboard {
   topCategories: CatAgg[];
   byPayment: PayAgg[];
   monthly: MonthAgg[];
+  topExpenses: Expense[];
   maxExpense: Expense | undefined;
   minExpense: Expense | undefined;
   mostUsedPayment: { payment: Payment; count: number } | undefined;
@@ -132,6 +137,7 @@ export function buildDashboard(expenses: Expense[]): Dashboard {
     topCategories: topCategories(expenses),
     byPayment: byPayment(expenses),
     monthly: monthlyTotals(expenses),
+    topExpenses: topExpenses(expenses, 5),
     maxExpense: maxExpense(expenses),
     minExpense: minExpense(expenses),
     mostUsedPayment: mostUsedPayment(expenses),

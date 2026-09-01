@@ -85,10 +85,7 @@ export default function FixosView({ recurrings, onAdd, onEdit, onRemove }: Props
           <p className="mb-2 ml-0.5 text-[12px] font-semibold uppercase tracking-[0.06em] text-muted">
             {form.id ? "Editar fixo" : "Novo fixo"}
           </p>
-          <div className="flex items-baseline justify-center gap-1.5">
-            <span className="mono text-xl text-muted">R$</span>
-            <AmountInput cents={form.cents} onChange={(c) => set("cents", c)} />
-          </div>
+          <AmountInput cents={form.cents} onChange={(c) => set("cents", c)} />
           <input
             value={form.description}
             onChange={(e) => set("description", e.target.value)}

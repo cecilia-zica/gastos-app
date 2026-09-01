@@ -22,5 +22,6 @@ export function useExpenses() {
     add: (input: NewExpense) => store.add(input),
     update: (id: string, patch: Partial<NewExpense>) => store.update(id, patch),
     remove: (id: string) => store.remove(id),
+    importMany: (inputs: NewExpense[]) => store.importMany(inputs),
   };
 }

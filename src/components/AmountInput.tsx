@@ -4,14 +4,17 @@ import { formatCents } from "../shared/format";
 interface Props {
   cents: number;
   onChange: (cents: number) => void;
+  /** Versao pequena, pra campos lado a lado (ex: investido/meta). */
+  compact?: boolean;
 }
 
 /**
- * Input hero do valor. Constroi o numero a partir dos digitos (estilo
- * banco): teclado numerico, cada digito empurra os centavos. Grande,
- * em mono, centralizado — o cupom fiscal do app.
+ * Input do valor. Constroi o numero a partir dos digitos (estilo
+ * banco): teclado numerico, cada digito empurra os centavos. Em mono,
+ * centralizado — o cupom fiscal do app. `compact` reduz o tamanho pra
+ * caber em campos menores sem perder o mesmo comportamento.
  */
-export default function AmountInput({ cents, onChange }: Props) {
+export default function AmountInput({ cents, onChange, compact }: Props) {
   const ref = useRef<HTMLInputElement>(null);
   const display = cents > 0 ? formatCents(cents) : "";
 
@@ -22,21 +25,28 @@ export default function AmountInput({ cents, onChange }: Props) {
 
   return (
     <div
-      className="flex items-baseline justify-center gap-1.5 py-1 cursor-text"
+      className={[
+        "flex items-baseline justify-center cursor-text",
+        compact ? "gap-1 py-1" : "gap-1.5 py-1",
+      ].join(" ")}
       onClick={() => ref.current?.focus()}
     >
-      <span className="mono text-2xl text-muted select-none">R$</span>
+      <span className={["mono text-muted select-none", compact ? "text-[13px]" : "text-2xl"].join(" ")}>
+        R$
+      </span>
       <input
         ref={ref}
         inputMode="numeric"
-        aria-label="Valor do gasto"
-        autoFocus
+        aria-label="Valor"
+        autoFocus={!compact}
         value={display}
         onChange={(e) => handle(e.target.value)}
         placeholder="0,00"
-        className="mono bg-transparent border-0 outline-none text-ink text-center
-                   text-[3.4rem] leading-none font-normal tabular
-                   w-full max-w-[8ch] placeholder:text-line caret-accent"
+        className={[
+          "mono bg-transparent border-0 outline-none text-ink text-center",
+          "leading-none font-normal tabular placeholder:text-line caret-accent",
+          compact ? "text-[15px] w-full max-w-[7ch]" : "text-[3.4rem] w-full max-w-[8ch]",
+        ].join(" ")}
       />
     </div>
   );

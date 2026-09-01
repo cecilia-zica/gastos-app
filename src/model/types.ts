@@ -36,3 +36,36 @@ export interface Recurring {
 }
 
 export type NewRecurring = Omit<Recurring, "id">;
+
+/** Uma entrada (renda). Espelha a tabela "Entradas" da planilha. */
+export interface Income {
+  id: string;
+  amountCents: number;
+  description: string;
+  /** Data ISO "YYYY-MM-DD". */
+  date: string;
+  createdAt: number;
+  syncedToSheet?: boolean;
+}
+
+export type NewIncome = Omit<Income, "id" | "createdAt" | "syncedToSheet">;
+
+/**
+ * Uma posicao de investimento: quanto ja foi investido nela vs a meta.
+ * Nao e um lancamento por transacao — e o estado atual da posicao.
+ */
+export interface Investment {
+  id: string;
+  name: string;
+  investedCents: number;
+  goalCents: number;
+  createdAt: number;
+}
+
+export type NewInvestment = Omit<Investment, "id" | "createdAt">;
+
+/** Teto de gasto por categoria (vale pra todo mes ate ser trocado). */
+export interface Budget {
+  category: string;
+  limitCents: number;
+}

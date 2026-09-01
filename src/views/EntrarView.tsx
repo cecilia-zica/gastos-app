@@ -10,7 +10,11 @@ interface Props {
 export default function EntrarView({ onSignIn, error }: Props) {
   return (
     <div className="mx-auto flex min-h-screen max-w-[460px] flex-col items-center justify-center px-6 text-center">
-      <img src={logoWert} alt="wert" className="rise mb-4 h-14 w-auto stamp" />
+      <img
+        src={logoWert}
+        alt="wert"
+        className="rise mb-4 h-14 w-auto stamp drop-shadow-[0_3px_4px_rgba(36,55,31,.35)]"
+      />
       <p className="rise mt-1 text-[14px] text-muted" style={{ animationDelay: "110ms" }}>
         entra com sua conta pra ver seus gastos em qualquer aparelho
       </p>
