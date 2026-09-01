@@ -115,7 +115,7 @@ export default function FixosView({ recurrings, onAdd, onEdit, onRemove }: Props
               type="button"
               onClick={save}
               disabled={form.cents <= 0}
-              className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-accent py-3 font-bold text-ink shadow-pop transition-all active:scale-[0.98] disabled:bg-line disabled:text-paper disabled:shadow-none"
+              className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-accent py-3 font-bold text-surface shadow-pop transition-all active:scale-[0.98] disabled:bg-line disabled:text-paper disabled:shadow-none"
             >
               <Check size={17} strokeWidth={2.5} /> Salvar
             </button>

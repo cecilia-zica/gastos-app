@@ -72,9 +72,9 @@ export default function HistoricoView({ expenses, onDelete }: Props) {
                   aria-pressed={on}
                   onClick={() => setSel(key)}
                   className={[
-                    "flex-none whitespace-nowrap rounded-full border px-4 py-2 text-[13.5px] font-semibold transition-all",
+                    "flex-none whitespace-nowrap rounded-card border px-4 py-2 text-[13.5px] font-semibold transition-all",
                     on
-                      ? "border-accent bg-accent text-ink shadow-pop"
+                      ? "border-accent bg-accent text-surface shadow-pop"
                       : "border-line bg-surface text-ink hover:border-ink/30",
                   ].join(" ")}
                 >

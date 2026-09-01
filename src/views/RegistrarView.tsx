@@ -31,7 +31,7 @@ export default function RegistrarView({
       </div>
 
       <div className="rise" style={{ animationDelay: "120ms" }}>
-        <QuickAdd draft={draft} set={set} />
+        <QuickAdd draft={draft} set={set} nextNumber={todayExpenses.length + 1} />
       </div>
 
       <div className="rise" style={{ animationDelay: "200ms" }}>

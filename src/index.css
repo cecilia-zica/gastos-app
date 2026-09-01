@@ -4,38 +4,40 @@
 
 /*
   ============================================================
-  Sistema de design — "Caderno riso"
-  Inspiracao: impressao risografica + caderno de bolso.
-  Tinta verde-garrafa sobre papel morno, com um unico acento
-  rosa-fluor (riso). Numeros em mono, como um cupom fiscal.
+  Sistema de design — "Herbário"
+  Inspiracao: caderno de coleta botanica + fichas de especime
+  prensado. Tinta verde-samambaia sobre papel de pergaminho, com
+  acento hortensia (azul-violeta) e rosa como segunda cor. Numeros
+  em mono, como um numero de acessao de museu.
   ============================================================
 */
 :root {
-  /* Paleta "Protea" — flor pincushion: taupe, laranja, creme, amarelo-palha.
-     Neutros quentes escolhidos (nao um cinza qualquer); o dado veste laranja. */
-  --paper: #ece1cf;        /* papel creme morno (fundo) */
-  --paper-2: #e3d5bd;      /* um tom abaixo, p/ profundidade */
-  --surface: #f7f0e3;      /* cartoes, palha clara */
-  --ink: #3a2e20;          /* espresso profundo = texto (derivado do taupe) */
-  --ink-soft: #5f4c37;
-  --muted: #877254;        /* taupe escuro p/ legendas (contraste AA) */
-  --line: #ddceb4;         /* hairline sobre papel */
+  /* Paleta "Herbário": pergaminho + tinta samambaia + hortensia + rosa. */
+  --paper: #eae1c8;        /* papel de pergaminho (fundo) */
+  --paper-2: #e0d5b2;      /* um tom abaixo, p/ profundidade */
+  --surface: #f4efdc;      /* cartoes, ficha de especime */
+  --ink: #24371f;          /* verde-samambaia quase preto = texto */
+  --ink-soft: #3d4f34;
+  --muted: #74795c;        /* sage escuro p/ legendas (contraste AA) */
+  --line: #d3c7a0;         /* hairline sobre papel */
 
-  /* o acento: laranja-protea. Um lugar so, quente e vivo. Texto sobre ele = ink. */
-  --accent: #e4842b;
-  --accent-ink: #a85d15;
-  --accent-soft: #f7e3c8;
+  /* o acento: hortensia azul-violeta. Um lugar so. Texto sobre ele = paper-soft. */
+  --accent: #5c6aa0;
+  --accent-ink: #3c4778;
+  --accent-soft: #e2e4f0;
 
-  /* amarelo-palha p/ realces sutis (2o plano de dado, nunca compete com o laranja) */
-  --straw: #e4e69c;
+  /* rosa (hortensia rosa) p/ realces sutis (2o plano de dado, nunca compete com o acento) */
+  --straw: #b1637e;
 
-  /* cor de dado dos graficos: marrom-sienna (validado: contraste + chroma AA) */
-  --data: #8a4e16;
-  --data-soft: #e7d3b8;
+  /* cor de dado dos graficos: verde-frondes */
+  --data: #43602f;
+  --data-soft: #dbe2ce;
 
   --good: #6f7a2f;         /* oliva quente p/ estado positivo */
+  --warn: #b8752e;         /* ambar p/ "categoria pendente" (semantico, nao decorativo) */
+  --warn-soft: #f0ddc0;
 
-  --grain-opacity: 0.42;
+  --grain-opacity: 0.5;
 }
 
 * { box-sizing: border-box; }
@@ -46,18 +48,18 @@ body {
   margin: 0;
   background-color: var(--paper);
   color: var(--ink);
-  font-family: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  font-family: Athelas, Georgia, "Iowan Old Style", serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  /* atmosfera: dois glows riso deslocados + gradiente de papel */
+  /* atmosfera: dois glows hortensia/rosa deslocados + gradiente de papel */
   background-image:
-    radial-gradient(120% 90% at 85% -10%, rgba(228, 132, 43, 0.16), transparent 55%),
-    radial-gradient(120% 80% at -10% 8%, rgba(228, 230, 156, 0.30), transparent 50%),
+    radial-gradient(120% 90% at 85% -10%, rgba(92, 106, 160, 0.14), transparent 55%),
+    radial-gradient(120% 80% at -10% 8%, rgba(177, 99, 126, 0.12), transparent 50%),
     linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
   background-attachment: fixed;
 }
 
-/* grao/textura de papel via SVG noise inline (sem asset externo) */
+/* grao/textura de papel: foto real de papel prensado (ver src/assets/paper-tile.jpg) */
 body::before {
   content: "";
   position: fixed;
@@ -66,13 +68,14 @@ body::before {
   pointer-events: none;
   opacity: var(--grain-opacity);
   mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  background-image: url("/paper-tile.jpg");
+  background-size: 480px 480px;
 }
 
 #root { position: relative; z-index: 1; }
 
 /* tipografia base */
-h1, h2, h3 { font-family: "Bricolage Grotesque Variable", ui-sans-serif, sans-serif; }
+h1, h2, h3 { font-family: Optima, Futura, "Century Gothic", "Avenir Next", sans-serif; }
 .tabular { font-variant-numeric: tabular-nums; }
 .mono { font-family: "Fragment Mono", ui-monospace, monospace; }
 

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, LogOut, NotebookPen } from "lucide-react";
+import { Check, LogOut } from "lucide-react";
+import logoWert from "./assets/logo-wert.webp";
 import RegistrarView from "./views/RegistrarView";
 import HistoricoView from "./views/HistoricoView";
 import DashboardView from "./views/DashboardView";
@@ -96,13 +97,15 @@ export default function App() {
   return (
     <div className="mx-auto min-h-screen max-w-[460px] px-4 pb-44 pt-6">
       <header className="rise mb-5 flex items-center gap-2.5 px-1">
-        <div className="stamp grid h-9 w-9 place-items-center rounded-xl bg-accent text-ink shadow-pop">
-          <NotebookPen size={18} strokeWidth={2.2} />
-        </div>
-        <div className="leading-tight">
-          <h1 className="font-display text-lg font-bold tracking-tight">wert</h1>
-          <p className="text-xs font-medium text-muted">seus gastos, sem susto</p>
-        </div>
+        <button
+          type="button"
+          onClick={() => setView("registrar")}
+          aria-label="Ir para Registrar"
+          className="stamp -my-1 flex flex-col items-start"
+        >
+          <img src={logoWert} alt="wert" className="h-10 w-auto" />
+          <p className="-mt-1 ml-0.5 text-xs font-medium text-muted">seus gastos, sem susto</p>
+        </button>
         {auth.user && (
           <button
             type="button"
@@ -160,7 +163,7 @@ export default function App() {
                   "pointer-events-auto flex w-full max-w-[428px] items-center justify-center",
                   "rounded-2xl py-4 text-[16.5px] font-bold transition-all duration-200 active:scale-[0.98]",
                   canSave
-                    ? "bg-accent text-ink shadow-pop"
+                    ? "bg-accent text-surface shadow-pop"
                     : "cursor-default bg-line text-paper",
                 ].join(" ")}
               >

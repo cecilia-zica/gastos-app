@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Trash2, Receipt } from "lucide-react";
+import { Trash2, Receipt, AlertTriangle } from "lucide-react";
 import { CATEGORY_ICON } from "../shared/catalog";
 import { formatBRL } from "../shared/format";
 import type { Expense } from "../model/types";
@@ -30,8 +30,10 @@ export default function EntryList({ title, totalCents, entries, onDelete }: Prop
       ) : (
         <ul className="flex flex-col gap-2">
           <AnimatePresence initial={false}>
-            {entries.map((e) => {
-              const Icon = CATEGORY_ICON[e.category] ?? Receipt;
+            {entries.map((e, i) => {
+              const hasCategory = e.category !== "";
+              const Icon = hasCategory ? (CATEGORY_ICON[e.category] ?? Receipt) : AlertTriangle;
+              const accession = String(entries.length - i).padStart(3, "0");
               return (
                 <motion.li
                   key={e.id}
@@ -40,23 +42,31 @@ export default function EntryList({ title, totalCents, entries, onDelete }: Prop
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, height: 0, marginBottom: 0 }}
                   transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex items-center gap-3 rounded-2xl border border-line bg-surface px-3.5 py-3 shadow-card"
+                  className="flex items-center gap-3 rounded-card border border-line bg-surface px-3.5 py-3 shadow-card"
                 >
-                  <div className="grid h-10 w-10 flex-none place-items-center rounded-xl bg-paper text-ink-soft">
-                    <Icon size={18} strokeWidth={2} />
+                  <div
+                    className={[
+                      "grid h-10 w-10 flex-none place-items-center rounded-full",
+                      hasCategory ? "bg-paper text-ink-soft" : "bg-warn-soft text-warn",
+                    ].join(" ")}
+                  >
+                    <Icon size={18} strokeWidth={hasCategory ? 2 : 2.2} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-[15px] font-semibold">
-                      {e.description || e.category}
+                      {e.description || e.category || "Sem descrição"}
                     </p>
                     <p className="mt-0.5 text-[12.5px] text-muted">
                       <span className="font-semibold text-ink-soft">{e.payment}</span>
                       {" · "}
-                      {e.category}
+                      {hasCategory ? e.category : "categoria pendente"}
                     </p>
                   </div>
                   <span className="mono text-[15px] font-normal tabular">
                     {formatBRL(e.amountCents)}
+                  </span>
+                  <span className="mono hidden shrink-0 text-[9.5px] text-line sm:block">
+                    Nº {accession}
                   </span>
                   <button
                     type="button"

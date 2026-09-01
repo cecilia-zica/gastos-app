@@ -1,4 +1,5 @@
-import { LogIn, NotebookPen } from "lucide-react";
+import { LogIn } from "lucide-react";
+import logoWert from "../assets/logo-wert.webp";
 
 interface Props {
   onSignIn: () => void;
@@ -9,12 +10,7 @@ interface Props {
 export default function EntrarView({ onSignIn, error }: Props) {
   return (
     <div className="mx-auto flex min-h-screen max-w-[460px] flex-col items-center justify-center px-6 text-center">
-      <div className="rise stamp mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-accent text-ink shadow-pop">
-        <NotebookPen size={26} strokeWidth={2.2} />
-      </div>
-      <h1 className="rise font-display text-2xl font-bold tracking-tight" style={{ animationDelay: "60ms" }}>
-        wert
-      </h1>
+      <img src={logoWert} alt="wert" className="rise mb-4 h-14 w-auto stamp" />
       <p className="rise mt-1 text-[14px] text-muted" style={{ animationDelay: "110ms" }}>
         entra com sua conta pra ver seus gastos em qualquer aparelho
       </p>
@@ -23,7 +19,7 @@ export default function EntrarView({ onSignIn, error }: Props) {
         type="button"
         onClick={onSignIn}
         className="rise mt-8 flex w-full items-center justify-center gap-2.5 rounded-2xl
-                   bg-accent py-4 text-[16.5px] font-bold text-ink shadow-pop
+                   bg-accent py-4 text-[16.5px] font-bold text-surface shadow-pop
                    transition-all duration-200 active:scale-[0.98]"
         style={{ animationDelay: "160ms" }}
       >

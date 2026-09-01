@@ -80,7 +80,7 @@ export default function DashboardView({ expenses }: Props) {
       <div
         role="group"
         aria-label="Período"
-        className="rise flex gap-1.5 rounded-full border border-line bg-surface p-1"
+        className="rise flex gap-1.5 rounded-card border border-line bg-surface p-1"
         style={{ animationDelay: "80ms" }}
       >
         {PERIODS.map((p) => {
@@ -92,8 +92,8 @@ export default function DashboardView({ expenses }: Props) {
               aria-pressed={active}
               onClick={() => setPeriod(p.id)}
               className={[
-                "flex-1 rounded-full py-2 text-[13px] font-semibold transition-colors",
-                active ? "bg-accent text-ink shadow-pop" : "text-muted hover:text-ink",
+                "flex-1 rounded-card py-2 text-[13px] font-semibold transition-colors",
+                active ? "bg-accent text-surface shadow-pop" : "text-muted hover:text-ink",
               ].join(" ")}
             >
               {p.label}
