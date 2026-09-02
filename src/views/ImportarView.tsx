@@ -5,6 +5,7 @@ import { findLikelyDuplicate } from "../model/statementImport/duplicates";
 import { CATEGORIES, PAYMENTS } from "../shared/catalog";
 import { formatBRL } from "../shared/format";
 import type { Expense, NewExpense, Payment } from "../model/types";
+import specimenCream from "../assets/specimen-cream.webp";
 
 interface ReviewRow extends ParsedRow {
   include: boolean;
@@ -80,9 +81,15 @@ export default function ImportarView({ existingExpenses, onImport, onDone }: Pro
 
       {!rows && (
         <section
-          className="rise flex flex-col items-center gap-3 rounded-card border border-dashed border-accent/50 bg-accent-soft/40 px-6 py-10 text-center"
+          className="rise relative flex flex-col items-center gap-3 overflow-hidden rounded-card border border-dashed border-accent/50 bg-accent-soft/40 px-6 py-10 text-center"
           style={{ animationDelay: "90ms" }}
         >
+          <img
+            src={specimenCream}
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-8 -right-4 w-[110px] rotate-[16deg] opacity-90 drop-shadow-[0_10px_14px_rgba(36,55,31,.22)]"
+          />
           <Upload size={26} strokeWidth={1.8} className="text-accent-ink" />
           <p className="text-[14px] text-ink-soft">
             Fatura do cartão ou extrato da conta, exportado em CSV.

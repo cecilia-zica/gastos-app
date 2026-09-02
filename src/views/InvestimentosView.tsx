@@ -3,6 +3,7 @@ import { Plus, Trash2, Pencil, Check, X, Sprout } from "lucide-react";
 import AmountInput from "../components/AmountInput";
 import { formatBRL } from "../shared/format";
 import type { Investment, NewInvestment } from "../model/types";
+import leaf from "../assets/leaf.webp";
 
 interface IForm {
   id?: string;
@@ -61,7 +62,13 @@ export default function InvestimentosView({ investments, onAdd, onEdit, onRemove
       </div>
 
       {form ? (
-        <section className="rise rounded-card border border-line bg-surface p-4 shadow-card">
+        <section className="rise relative rounded-card border border-line bg-surface p-4 shadow-card">
+          <img
+            src={leaf}
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-4 right-3 h-[68px] w-auto rotate-[14deg] drop-shadow-[0_10px_14px_rgba(36,55,31,.28)]"
+          />
           <p className="mb-2 ml-0.5 font-display text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
             {form.id ? "Editar posição" : "Nova posição"}
           </p>

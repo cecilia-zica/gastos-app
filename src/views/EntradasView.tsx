@@ -3,6 +3,7 @@ import { Plus, Trash2, Check, X, TrendingUp } from "lucide-react";
 import AmountInput from "../components/AmountInput";
 import { formatBRL, formatDayLabel, todayISO } from "../shared/format";
 import type { Income, NewIncome } from "../model/types";
+import tulip from "../assets/tulip.webp";
 
 interface IForm {
   cents: number;
@@ -47,7 +48,13 @@ export default function EntradasView({ income, onAdd, onRemove }: Props) {
       </div>
 
       {form ? (
-        <section className="rise rounded-card border border-line bg-surface p-4 shadow-card">
+        <section className="rise relative rounded-card border border-line bg-surface p-4 shadow-card">
+          <img
+            src={tulip}
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-3 right-4 h-[76px] w-auto rotate-[-8deg] drop-shadow-[0_10px_14px_rgba(36,55,31,.28)]"
+          />
           <p className="mb-2 ml-0.5 font-display text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
             Nova entrada
           </p>
