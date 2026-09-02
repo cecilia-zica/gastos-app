@@ -1,5 +1,6 @@
 import type { Payment } from "../types";
 import { categorize } from "./categorize";
+import { maskSensitiveData } from "./mask";
 
 export interface ParsedRow {
   date: string; // ISO "YYYY-MM-DD"
@@ -69,7 +70,7 @@ function toRow(date: string, description: string, amountCents: number, direction
   const suggestion = categorize(description);
   return {
     date,
-    description,
+    description: maskSensitiveData(description),
     amountCents,
     direction,
     suggestedCategory: suggestion,

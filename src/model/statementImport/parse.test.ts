@@ -88,3 +88,16 @@ describe("parseStatement — extrato C6", () => {
     expect(mercado?.suggestedCategory).toBe("Mercado");
   });
 });
+
+describe("parseStatement — mascara CPF no titulo do Pix", () => {
+  const CSV_COM_CPF = `Data Lançamento,Data Contábil,Título,Descrição,Entrada(R$),Saída(R$),Saldo do Dia(R$)
+20/08/2026,20/08/2026,Pix enviado para JOAO DA SILVA CPF 123.456.789-00,TRANSF ENVIADA PIX,0.00,50.00,100.00
+`;
+
+  it("nao salva o CPF completo na descricao", () => {
+    const { rows } = parseStatement(CSV_COM_CPF);
+    expect(rows).toHaveLength(1);
+    expect(rows[0].description).not.toContain("123.456.789-00");
+    expect(rows[0].description).toBe("Pix enviado para JOAO DA SILVA CPF ***.***.***-**");
+  });
+});

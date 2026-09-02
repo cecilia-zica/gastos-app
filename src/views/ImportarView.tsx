@@ -1,23 +1,26 @@
 import { useRef, useState } from "react";
-import { Upload, AlertTriangle, FileText, Check, X } from "lucide-react";
+import { Upload, AlertTriangle, FileText, Check, X, Copy } from "lucide-react";
 import { parseStatement, type ParsedRow } from "../model/statementImport/parse";
+import { findLikelyDuplicate } from "../model/statementImport/duplicates";
 import { CATEGORIES, PAYMENTS } from "../shared/catalog";
 import { formatBRL } from "../shared/format";
-import type { NewExpense, Payment } from "../model/types";
+import type { Expense, NewExpense, Payment } from "../model/types";
 
 interface ReviewRow extends ParsedRow {
   include: boolean;
   category: string; // "" = sem categoria
   payment: Payment;
+  duplicateOf?: Expense;
 }
 
 interface Props {
+  existingExpenses: Expense[];
   onImport: (rows: NewExpense[]) => void;
   onDone: () => void;
 }
 
 /** Aba Importar extrato — só CSV por agora (Nubank fatura, C6 extrato, genérico). */
-export default function ImportarView({ onImport, onDone }: Props) {
+export default function ImportarView({ existingExpenses, onImport, onDone }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [rows, setRows] = useState<ReviewRow[] | null>(null);
@@ -34,12 +37,16 @@ export default function ImportarView({ onImport, onDone }: Props) {
     }
     setEmpty(false);
     setRows(
-      parsed.map((r) => ({
-        ...r,
-        include: true,
-        category: r.suggestedCategory ?? "",
-        payment: r.suggestedPayment,
-      })),
+      parsed.map((r) => {
+        const duplicateOf = findLikelyDuplicate(r, existingExpenses);
+        return {
+          ...r,
+          include: !duplicateOf,
+          category: r.suggestedCategory ?? "",
+          payment: r.suggestedPayment,
+          duplicateOf,
+        };
+      }),
     );
   }
 
@@ -171,6 +178,13 @@ export default function ImportarView({ onImport, onDone }: Props) {
                       <p className="mt-1.5 flex items-center gap-1 text-[11px] text-warn">
                         <AlertTriangle size={12} strokeWidth={2.2} />
                         não reconheci — escolhe uma categoria
+                      </p>
+                    )}
+                    {r.duplicateOf && (
+                      <p className="mt-1.5 flex items-center gap-1 text-[11px] text-warn">
+                        <Copy size={12} strokeWidth={2.2} />
+                        já lançado: {r.duplicateOf.description || r.duplicateOf.category} ·{" "}
+                        {formatBRL(r.duplicateOf.amountCents)}
                       </p>
                     )}
                   </div>

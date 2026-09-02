@@ -159,6 +159,7 @@ export default function App() {
           />
         ) : view === "importar" ? (
           <ImportarView
+            existingExpenses={expenses}
             onImport={(rows) => {
               void importMany(rows);
               showToast(`${rows.length} importado${rows.length === 1 ? "" : "s"}`);
